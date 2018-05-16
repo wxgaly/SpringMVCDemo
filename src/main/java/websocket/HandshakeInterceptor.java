@@ -15,13 +15,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
                                    ServerHttpResponse response, WebSocketHandler wsHandler,
                                    Map<String, Object> attributes) throws Exception {
         System.out.println("Before Handshake");
-
-        request.getHeaders().forEach((key, value) -> {
-            System.out.println(key);
-            System.out.println("----------");
-            value.forEach(System.out::println);
-        });
-
         return super.beforeHandshake(request, response, wsHandler, attributes);
     }
 

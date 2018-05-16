@@ -1,5 +1,11 @@
+import com.alibaba.fastjson.JSON;
 import okhttp3.*;
 import okio.ByteString;
+import pojo.Message;
+import pojo.ModuleId;
+import util.WebSocketHttpHeaderUtil;
+
+import java.util.UUID;
 
 /**
  * PACKAGE_NAME.MainJava
@@ -19,7 +25,8 @@ public class MainJava {
 
         Request request = new Request.Builder()
                 .url("ws://127.0.0.1:8080/websocket")
-                .addHeader("username", "123456")
+                .addHeader(WebSocketHttpHeaderUtil.KEY_USERNAME, UUID.randomUUID().toString())
+                .addHeader(WebSocketHttpHeaderUtil.KEY_ID, ModuleId.CLIENT2)
                 .build();
         okHttpClient.newWebSocket(request, new EchoWebSocketListener());
     }
@@ -28,8 +35,9 @@ public class MainJava {
         @Override
         public void onOpen(WebSocket webSocket, Response response) {
 
-            webSocket.send("hello world");
-            webSocket.send("welcome");
+            webSocket.send(JSON.toJSONString(new Message(ModuleId.CLIENT2, ModuleId.WEBSOCKET_SERVER_ID, "login")));
+            webSocket.send(JSON.toJSONString(new Message(ModuleId.CLIENT2, ModuleId.CLIENT1, "你好，我是一号")));
+//            webSocket.send("welcome");
 //            webSocket.send(ByteString.decodeHex("adef"));
         }
 

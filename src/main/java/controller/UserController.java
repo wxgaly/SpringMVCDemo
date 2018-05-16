@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Scope("prototype")
 @RequestMapping("/user")
-public class User {
+public class UserController {
 
     @RequestMapping(method= RequestMethod.GET)
     @ResponseBody
